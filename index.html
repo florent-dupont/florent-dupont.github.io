@@ -1,152 +1,849 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Florent Dupont</title>
-    <link rel="stylesheet" href="styles.css">
-    <meta name="personal webpage of florent dupont" content="personal webpage of florent dupont">
-    <meta name="keywords" content="Florent, dupont, IRMA, Unistra, Strasbourg, mathematics, research">
-    <meta name="author" content="Florent Dupont">
-</head>
+<html lang="en"><head>
+<meta name="description" content="Florent Dupont — PhD researcher in Mathematical physics">
+<title>Florent Dupont</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-  hr {
-      width: 100%;  /* Adjust the width as needed */
-      margin: 0 auto;  /* This centers the line */
-      border: 1px solid rgb(0, 0, 0);  /* You can customize the border */
+  /* ─── TOKENS ─── */
+  :root {
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'Inter', system-ui, sans-serif;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* ─── PALETTE A: Ivory + Indigo ─── */
+  .palette-A {
+    --bg:       oklch(97% 0.008 80);
+    --bg-alt:   oklch(94% 0.010 80);
+    --fg:       oklch(14% 0.020 265);
+    --fg-muted: oklch(45% 0.015 265);
+    --accent:   oklch(42% 0.160 265);
+    --accent-h: oklch(35% 0.180 265);
+    --border:   oklch(87% 0.010 80);
+    --nav-bg:   oklch(97% 0.008 80 / 0.94);
+  }
+  .palette-A.dark {
+    --bg:       oklch(11% 0.015 265);
+    --bg-alt:   oklch(15% 0.018 265);
+    --fg:       oklch(95% 0.005 80);
+    --fg-muted: oklch(65% 0.010 80);
+    --accent:   oklch(72% 0.130 265);
+    --accent-h: oklch(80% 0.140 265);
+    --border:   oklch(22% 0.020 265);
+    --nav-bg:   oklch(11% 0.015 265 / 0.94);
+  }
+
+  /* ─── PALETTE B: Bone + Amber ─── */
+  .palette-B {
+    --bg:       oklch(97% 0.008 95);
+    --bg-alt:   oklch(93% 0.012 85);
+    --fg:       oklch(13% 0.015 60);
+    --fg-muted: oklch(45% 0.020 60);
+    --accent:   oklch(52% 0.170 50);
+    --accent-h: oklch(44% 0.180 45);
+    --border:   oklch(87% 0.014 85);
+    --nav-bg:   oklch(97% 0.008 95 / 0.94);
+  }
+  .palette-B.dark {
+    --bg:       oklch(12% 0.012 60);
+    --bg-alt:   oklch(16% 0.015 60);
+    --fg:       oklch(96% 0.005 80);
+    --fg-muted: oklch(65% 0.012 80);
+    --accent:   oklch(76% 0.160 50);
+    --accent-h: oklch(82% 0.170 50);
+    --border:   oklch(22% 0.018 60);
+    --nav-bg:   oklch(12% 0.012 60 / 0.94);
+  }
+
+  /* ─── PALETTE C: White + Vermillion (default) ─── */
+  .palette-C {
+    --bg:       oklch(99% 0.002 0);
+    --bg-alt:   oklch(96% 0.004 10);
+    --fg:       oklch(10% 0.005 0);
+    --fg-muted: oklch(45% 0.008 0);
+    --accent:   #913D3D;
+    --accent-h: oklch(44% 0.210 22);
+    --border:   oklch(88% 0.005 0);
+    --nav-bg:   oklch(99% 0.002 0 / 0.94);
+  }
+  .palette-C.dark {
+    --bg:       oklch(10% 0.005 0);
+    --bg-alt:   oklch(14% 0.008 0);
+    --fg:       oklch(97% 0.002 0);
+    --fg-muted: oklch(60% 0.008 0);
+    --accent:   oklch(68% 0.190 25);
+    --accent-h: oklch(74% 0.200 25);
+    --border:   oklch(22% 0.010 0);
+    --nav-bg:   oklch(10% 0.005 0 / 0.94);
+  }
+
+  /* ─── RESET ─── */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; font-size: 15px; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.6;
+    transition: background-color 0.4s, color 0.4s;
+    overflow-x: hidden;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--accent-h); text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--nav-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 54px;
+    transition: background 0.3s;
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1rem;
+    color: var(--fg);
+    letter-spacing: 0.01em;
+  }
+  .nav-logo:hover { text-decoration: none; color: var(--accent); }
+  .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); text-decoration: none; }
+  .nav-controls { display: flex; align-items: center; gap: 0.75rem; }
+  /* .dark-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--fg-muted);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 0.68rem;
+    font-family: var(--sans);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .dark-toggle:hover { border-color: var(--accent); color: var(--accent); } */
+
+  /* Mobile nav */
+  .hamburger {
+    display: none;
+    flex-direction: column; gap: 5px;
+    background: none; border: none;
+    cursor: pointer; padding: 4px;
+  }
+  .hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: var(--fg); border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 54px 0 0 0;
+    background: var(--bg);
+    z-index: 99;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-family: var(--serif); font-size: 2rem; color: var(--fg); }
+  .mobile-menu a:hover { color: var(--accent); text-decoration: none; }
+  @media (max-width: 680px) {
+    .nav-links, .dark-toggle { display: none; }
+    .hamburger { display: flex; }
+  }
+
+  /* ─── HERO ─── */
+  #home {
+    padding: 54px 7vw 0;
+    min-height: 45svh;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0;
+    align-items: center;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3.5rem 0 2.5rem;
+  }
+  .hero-photo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 4rem;
+    border-right: 1px solid var(--border);
+    margin-right: 4rem;
+  }
+  .photo-frame {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--bg-alt);
+    border: 2px solid var(--border);
+    flex-shrink: 0;
+  }
+  .photo-frame img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+  .photo-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    color: var(--fg-muted);
+  }
+  .hero-body { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--accent);
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .hero-name {
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 4.5vw, 3rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+  }
+  .hero-name em { font-style: italic; color: var(--accent); }
+  .hero-desc {
+    font-size: 0.9rem;
+    color: var(--fg-muted);
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+  }
+  .hero-desc strong { color: var(--fg); font-weight: 600; }
+  .hero-links { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1.2rem;
+    border-radius: 3px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+    font-family: var(--sans);
+    text-decoration: none !important;
+  }
+  .btn-primary { background: var(--accent); color: var(--bg); }
+  .btn-primary:hover { background: var(--accent-h); color: var(--bg); }
+  .btn-outline { background: transparent; color: var(--fg); border: 1px solid var(--border); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-photo { border-right: none; margin-right: 0; padding-right: 0; border-bottom: 1px solid var(--border); padding-bottom: 2rem; margin-bottom: 1rem; justify-content: flex-start; }
+    .hero-body { grid-template-columns: 1fr; gap: 1.5rem; }
+  }
+  @media (max-width: 580px) {
+    #home { padding-left: 5vw; padding-right: 5vw; }
+    .hero-links { flex-direction: column; align-items: flex-start; }
+  }
+
+  /* ─── SPLIT SECTION ─── */
+  .split-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .split-col {
+    padding: 3.5rem 4vw;
+  }
+  .split-col:first-child {
+    border-right: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .split-col:last-child {
+    background: var(--bg);
+  }
+  .split-col + .split-col { }
+
+  @media (max-width: 860px) {
+    .split-section { grid-template-columns: 1fr; }
+    .split-col:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+  }
+
+  /* ─── SECTION LABELS ─── */
+  .section-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+    color: var(--fg);
+  }
+  .subsection-title {
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    margin-bottom: 1rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+  .subsection-title:first-of-type { margin-top: 0; }
+
+  /* ─── TALKS ─── */
+  .talk-list { list-style: none; margin-bottom: 0; }
+  .talk-item {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 1rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+  .talk-item:last-child { border-bottom: none; }
+  .talk-date {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.03em;
+    padding-top: 2px;
+  }
+  .talk-title {
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    color: var(--fg);
+    margin-bottom: 0.15rem;
+    line-height: 1.35;
+  }
+  .talk-venue {
+    font-size: 0.75rem;
+    color: var(--fg-muted);
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  /* ─── PUBLICATIONS ─── */
+  .pub-list { list-style: none; }
+  .pub-item {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 1.1rem 1.25rem;
+    margin-bottom: 0.75rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .pub-item:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .pub-authors { font-size: 0.74rem; color: var(--fg-muted); margin-bottom: 0.3rem; }
+  .pub-title { font-family: var(--serif); font-size: 0.98rem; color: var(--fg); line-height: 1.35; }
+  .pub-venue { font-size: 0.72rem; color: var(--accent); font-weight: 500; margin-top: 0.3rem; }
+
+  /* ─── TIMELINE ─── */
+  .timeline { list-style: none; position: relative; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 5px; top: 4px; bottom: 4px;
+    width: 1px;
+    background: var(--border);
+  }
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 12px 1fr;
+    gap: 1.1rem;
+    padding-bottom: 1.75rem;
+  }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-dot {
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+  .timeline-period {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+  }
+  .timeline-role {
+    font-family: var(--serif);
+    font-size: 0.98rem;
+    color: var(--fg);
+    margin-bottom: 0.25rem;
+    line-height: 1.3;
+  }
+  .timeline-place {
+    font-size: 0.83rem;
+    color: var(--fg-muted);
+    line-height: 1.5;
+  }
+
+  /* ─── TEACHING ─── */
+  .course-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+  @media (max-width: 580px) { .course-grid { grid-template-columns: 1fr; } }
+  .course-card {
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 1rem 1.1rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .split-col:last-child .course-card { background: var(--bg); }
+  .course-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .course-period {
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+  }
+  .course-name { font-family: var(--serif); font-size: 0.95rem; color: var(--fg); line-height: 1.35; }
+
+  /* ─── CV DOWNLOAD ─── */
+  .cv-download {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ─── CONTACT STRIP ─── */
+  #contact {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 7vw;
+  }
+  .contact-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .contact-left { }
+  .contact-heading {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    color: var(--fg);
+    margin-bottom: 0.75rem;
+  }
+  .contact-details { display: flex; flex-direction: column; gap: 0.5rem; }
+  .contact-detail {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.84rem;
+    color: var(--fg-muted);
+  }
+  .contact-detail svg { flex-shrink: 0; margin-top: 1px; color: var(--accent); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 1.25rem 5vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.72rem;
+    color: var(--fg-muted);
+  }
+
+  /* ─── ANIMATE ON SCROLL ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.65s var(--ease), transform 0.65s var(--ease);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.08s; }
+  .reveal-delay-2 { transition-delay: 0.16s; }
+  .reveal-delay-3 { transition-delay: 0.24s; }
+  .reveal-delay-4 { transition-delay: 0.32s; }
+
+  /* ─── HERO FADE IN ─── */
+  .hero-fade {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: heroIn 0.8s var(--ease) forwards;
+  }
+  .hero-fade-1 { animation-delay: 0.1s; }
+  .hero-fade-2 { animation-delay: 0.22s; }
+  .hero-fade-3 { animation-delay: 0.34s; }
+  .hero-fade-4 { animation-delay: 0.46s; }
+  @keyframes heroIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── DIVIDER LABEL ─── */
+  .col-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
+  }
+  .col-header-num {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+  .col-header-line {
+    height: 1px;
+    flex: 1;
+    background: var(--border);
+  }
+  .col-title {
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    color: var(--fg);
+    letter-spacing: -0.02em;
+    margin-bottom: 0;
   }
 </style>
+</head>
+<body class="palette-C" id="body">
 
-
-<body>
-    <div id="backgroundl"></div> <!-- Background container -->
-    <div id="backgroundr"></div> <!-- Background container -->
-
-
-    <div id="container">
-        <header>
-            <h1>Florent Dupont</h1>
-
-            <center>
-              PhD student in Mathematics
-              </center>
-              <center>
-              Institut de Recherche Mathématique Avancée,
-              </center>
-              <center>
-              Strasbourg, France
-              </center>
-            <!-- <nav>
-                <ul>
-                    <li><a href="#research">Research</a></li>
-                    <li><a href="#teaching">Teaching</a></li>
-                    <li><a href="#miscellaneous">Miscellaneous</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav> -->
-        </header>
-        
-        <main>
-            <section>
-
-
-    
-              
-
-
-    <div class="link container">
-
-                
-    <!-- <img src="poster_web.jpg" alt="Centered Image" style="display: block; margin: 0 auto; max-width: 60%; height: auto;"> -->
-      <!-- <img src="web.png" alt="Centered Image" style="display: block; margin: 0 auto; max-width: 60%; height: auto;"> -->
-    <br> 
-    <br>   
-    <hr>
-    <br>
-    <br> 
-    
-    I am a PhD student at 
-    <a href="https://irma.math.unistra.fr/">Institut de Recherche Mathématique Avancée, UMR 7501</a> of the <a href="https://www.unistra.fr/"> université de Strasbourg</a>
-    under the supervision of
-    <a href="https://irma.math.unistra.fr/~klevtsov/">Semyon Klevtsov</a>. 
-
-    <!-- You can find my CV <a href="cv.pdf" target="_blank">here</a> (2024).  -->
-
-    
-
-    <!-- I am a PhD student at 
-    <a href="https://irma.math.unistra.fr/">Institut de Recherche Mathématique Avancée, UMR 7501 de l'Université de Strasbourg</a>
-    under the supervision of
-    <a href="https://irma.math.unistra.fr/~klevtsov/">Semyon Klevtsov</a>. --> 
-
-  <!--   <table>
-      <tbody>
-        <tr>
-          <td>
-      <img src="poster_web.png" loading="lazy" alt="Picture" width="400" align="left">
-          </td>
-          <td>
-      <p>
-        I am a PhD student at 
-    <a href="https://irma.math.unistra.fr/">Institut de Recherche Mathématique Avancée, UMR 7501</a> of the <a href="https://www.unistra.fr/"> université de Strasbourg</a>
-    under the supervision of
-    <a href="https://irma.math.unistra.fr/~klevtsov/">Semyon Klevtsov</a>. 
-    
-      </p>
-          </td>
-        </tr>
-      </tbody>
-    </table> -->
-
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">Florent Dupont</a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#cv">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-controls">
+    <!-- <button class="dark-toggle" id="dark-btn">Dark</button> -->
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
+</nav>
 
-                    <h2 id="research">Research</h2>
-                    
-                    I am interested in the intersections between geometry and mathematical physics. I am currently studying the links between the Fractional Quantum Hall effect and algebraic geometry.
-                     
-              
-                        <h2 id="teaching">Teaching</h2>
-                        <ul>
-                          <li>
-                            <i>Fall 2024</i> : Mathematics for sciences - L1 chemistry students.
-                          </li>
-                        <li>
-                          <i>Fall 2024</i> : Preparatory courses of mathematics - L1 biology students.
-                        </li>
-                        <li>
-                          <i> Fall 2023</i> : Preparatory courses of mathematics - L1 biology students.
-                        </li>
-                      </ul>
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#home" class="mob-link">Home</a>
+  <a href="#research" class="mob-link">Research</a>
+  <a href="#cv" class="mob-link">Education</a>
+  <a href="#contact" class="mob-link">Contact</a>
+</div>
 
-
-                      <!-- <h2 id="miscellaneous">Miscellaneous</h2> -->
-                    
-              
-                   
-                        
-              
-                    <h2 id="contact">Contact</h2>
-                   <ul>
-                        <li>
-                          Email : florent <i>dot</i> dupont <i>at</i> unistra <i>dot</i> fr
-                        </li>
-                        <li>
-                          Adress : IRMA, 7 Rue René Descartes, 67084 Strasbourg Cedex
-                        </li>
-                        <li>
-                          Office : P-308, Bâtiment UFR Maths-Info
-                        </li>
-                      </ul>
-                    
-                      
-                  
-                </section>
-        </main>
-        
-       
+<!-- HERO -->
+<section id="home">
+  <div class="hero-inner">
+    <div class="hero-photo hero-fade hero-fade-1">
+      <div class="photo-frame">
+        <img src="pfp.jpg" alt="Florent Dupont"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="photo-placeholder" style="display:none">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <circle cx="12" cy="8" r="4"></circle>
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"></path>
+          </svg>
+        </div>
+      </div>
     </div>
 
-    <script src="script.js"></script>
-</body>
-</html>
+    <div class="hero-body">
+      <div>
+        <!-- <div class="hero-tag hero-fade hero-fade-1">PhD Researcher · Mathematical Physics</div> -->
+        <h1 class="hero-name hero-fade hero-fade-2">Florent <br>Dupont</h1>
+      </div>
+      <div class="hero-fade hero-fade-3">
+        <p class="hero-desc">
+          PhD researcher at the <a href="https://irma.math.unistra.fr/" target="_blank" rel="noopener noreferrer">IRMA laboratory</a>, Université de Strasbourg, supervised by <a href="https://irma.math.unistra.fr/~klevtsov" target="_blank" rel="noopener noreferrer">Semyon Klevtsov</a>.
+          My research sits at the intersection of <strong>geometry and mathematical physics</strong>. Open to industry opportunities where mathematical depth translates into tangible impact.
+        </p>
+        <div class="hero-links hero-fade hero-fade-4">
+          <!-- <a href="#research" class="btn btn-primary">View Research</a> -->
+          <a href="cv.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Full CV ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPLIT: RESEARCH (left) | EDUCATION + TEACHING (right) -->
+<div class="split-section">
+
+  <!-- LEFT: RESEARCH -->
+  <div class="split-col" id="research">
+    <div class="reveal">
+      <div class="col-header">
+        <span class="col-header-num">02 — Research</span>
+        <div class="col-header-line"></div>
+      </div>
+      <h2 class="col-title">Talks &amp; Publications</h2>
+    </div>
+
+    <div class="subsection-title reveal reveal-delay-1">Talks</div>
+    <ul class="talk-list">
+      <li class="talk-item reveal reveal-delay-1">
+        <div class="talk-date">May 2026</div>
+        <div>
+          <div class="talk-title">Introduction to topological quantum computing</div>
+          <div class="talk-venue">PhD Seminar — IRMA Strasbourg, France</div>
+        </div>
+      </li>
+      <li class="talk-item reveal reveal-delay-2">
+        <div class="talk-date">Dec 2025</div>
+        <div>
+          <div class="talk-title">Chern classes of the multilayer fractional quantum Hall bundle on Riemann surfaces</div>
+          <div class="talk-venue">Oberseminar "Algebra und Algebraische Geometrie" — Paderborn University, Germany</div>
+        </div>
+      </li>
+      <li class="talk-item reveal reveal-delay-2">
+        <div class="talk-date">Jul 2025</div>
+        <div>
+          <div class="talk-title">Oral communication</div>
+          <div class="talk-venue">SRI 2025 — International conference in algebraic geometry, Colorado State University Fort Collins, USA</div>
+        </div>
+      </li>
+      <li class="talk-item reveal reveal-delay-3">
+        <div class="talk-date">Feb 2025</div>
+        <div>
+          <div class="talk-title">Introduction to quantum computing and Shor's algorithm</div>
+          <div class="talk-venue">Young Seminar — Laboratoire de Mathématiques de Versailles / UVSQ, France</div>
+        </div>
+      </li>
+      <li class="talk-item reveal reveal-delay-4">
+        <div class="talk-date">May 2024</div>
+        <div>
+          <div class="talk-title">Geometry in fractional quantum Hall states</div>
+          <div class="talk-venue">PhD Seminar — IRMA Strasbourg, France</div>
+        </div>
+      </li>
+    </ul>
+
+    <div class="subsection-title reveal">Publications</div>
+    <ul class="pub-list">
+      <li class="pub-item reveal reveal-delay-1">
+        <div class="pub-authors">Florent Dupont · Semyon Klevtsov</div>
+        <div class="pub-title">
+          <!-- <a href="https://arxiv.org/pdf/2509.17515" target="_blank" rel="noopener noreferrer"> -->
+            Chern classes of Laughlin bundles on the quasihole moduli space (expected 2026)
+          </a>
+        </div>
+        <div class="pub-venue">&nbsp;</div>
+      </li>
+      <li class="pub-item reveal reveal-delay-2">
+        <div class="pub-authors">Florent Dupont · Maria Abad Aldonza</div>
+        <div class="pub-title">
+          <a href="https://arxiv.org/pdf/2509.17515" target="_blank" rel="noopener noreferrer">
+            Chern classes of the multilayer fractional quantum Hall bundle on Riemann surfaces
+          </a>
+        </div>
+        <div class="pub-venue">&nbsp;</div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- RIGHT: EDUCATION + TEACHING -->
+  <div class="split-col" id="cv">
+    <div class="reveal">
+      <div class="col-header">
+        <span class="col-header-num">03 — Academic Path</span>
+        <div class="col-header-line"></div>
+      </div>
+      <h2 class="col-title">Education</h2>
+    </div>
+
+    <ul class="timeline">
+      <li class="timeline-item reveal reveal-delay-1">
+        <div class="timeline-dot"></div>
+        <div>
+          <div class="timeline-period">2023 — Present</div>
+          <div class="timeline-role">PhD in Mathematical Physics — IRMA Laboratory</div>
+          <div class="timeline-place">
+            Supervised by <a href="https://irma.math.unistra.fr/~klevtsov" target="_blank" rel="noopener noreferrer">Semyon Klevtsov</a>,
+            Université de Strasbourg
+          </div>
+        </div>
+      </li>
+      <li class="timeline-item reveal reveal-delay-2">
+        <div class="timeline-dot"></div>
+        <div>
+          <div class="timeline-period">2021 — 2023</div>
+          <div class="timeline-role">École Normale Supérieure de Lyon (ENS Lyon)</div>
+          <div class="timeline-place">
+            M2 in Mathematics (Algebraic Geometry &amp; Dynamics) · M1 in Fundamental Physics (Theoretical Physics)
+          </div>
+        </div>
+      </li>
+      <li class="timeline-item reveal reveal-delay-3">
+        <div class="timeline-dot"></div>
+        <div>
+          <div class="timeline-period">2019 — 2023</div>
+          <div class="timeline-role">Mines Paris · PSL</div>
+          <div class="timeline-place">
+            Admitted trough competitive national selection
+          </div>
+        </div>
+      </li>
+    </ul>
+
+    <div class="cv-download reveal">
+      <a href="cv.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Full CV ↗</a>
+    </div>
+
+    <!-- TEACHING -->
+    <div class="subsection-title reveal" id="teaching" style="margin-top: 2.5rem;">04 — Teaching</div>
+    <p class="reveal" style="font-size:0.82rem;color:var(--fg-muted);margin-bottom:1rem;">Courses I'm currently teaching at Université de Strasbourg.</p>
+    <div class="course-grid">
+      <div class="course-card reveal reveal-delay-1">
+        <div class="course-period">Fall 2024 – 2026</div>
+        <div class="course-name">Mathematics for Chemistry</div>
+      </div>
+      <div class="course-card reveal reveal-delay-2">
+        <div class="course-period">Fall 2023 – 2026</div>
+        <div class="course-name">Mathematics for Biology</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end split-section -->
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <div class="section-label reveal">05 — Contact</div>
+      
+      <div class="contact-details reveal reveal-delay-2">
+        <div class="contact-detail">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+          <span>florentdup[at]proton[dot]me</span>
+        </div>
+        <!-- <div class="contact-detail">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+            <circle cx="12" cy="11" r="3"></circle>
+          </svg>
+          <span>Office 308, 3rd floor — <a href="https://mathinfo.unistra.fr/" target="_blank" rel="noopener noreferrer">UFR Math-Info</a>, 7 Rue René Descartes, Strasbourg</span>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Florent Dupont</span>
+  
+</footer>
+
+<script>
+  // ─── THEME STATE ───
+  const body = document.getElementById('body');
+  let palette = 'C';
+  let dark = false;
+
+  // try {
+  //   const saved = JSON.parse(localStorage.getItem('fd-prefs') || '{}');
+  //   if (saved.dark !== undefined) dark = saved.dark;
+  // } catch(e) {}
+
+  function applyTheme() {
+    body.className = 'palette-' + palette ;
+    // document.getElementById('dark-btn').textContent = dark ? 'Light' : 'Dark';
+    // try { localStorage.setItem('fd-prefs', JSON.stringify({palette, dark})); } catch(e) {}
+  }
+  applyTheme();
+
+  // document.getElementById('dark-btn').addEventListener('click', () => {
+  //   dark = !dark; applyTheme();
+  // });
+
+  // ─── MOBILE MENU ───
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  document.querySelectorAll('.mob-link').forEach(l =>
+    l.addEventListener('click', () => mobileMenu.classList.remove('open'))
+  );
+
+  // ─── SCROLL REVEAL ───
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.10 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ─── SMOOTH SCROLL ───
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        const offset = target.getBoundingClientRect().top + window.scrollY - 60;
+        window.scrollTo({ top: offset, behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+
+</body></html>
